@@ -1,0 +1,123 @@
+<!-- BODY -->
+<div class="container py-5">
+  <div class="row">
+    <!-- Vending Machine Card -->
+    <div class="col-6">
+      <div class="card container-fluid shadow px-0 vending-machine-card">
+        <div class="card-header">
+          <div class="row py-2">
+            <span class="col text-center">
+              <h1>Vending Machine</h1>
+            </span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4 p-3 one-item text-center" *ngFor="let item of (items$|async)"
+              [ngClass]="{'selected': (itemChose$|async)?.id == item.id}">
+              <div class="card p-2" (click)="addItem(item)">
+                <div class="container">
+                  <div class="row">
+                    <span>Name: {{item.name}}</span>
+                  </div>
+                  <div class="row">
+                    <span>Quantity: {{item.quantity}}</span>
+                  </div>
+                  <div class="row">
+                    <span>Price: {{item.price}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="row d-flex justify-content-center">
+            <button class="btn btn-danger m-2" (click)="resetVendingMachine()">
+              <h5 class="mb-0">Reset the machine </h5>
+            </button>
+            <button class="btn btn-warning m-2" (click)="cancelOrder()">
+              <h5 class="mb-0">Cancel order</h5>
+            </button>
+            <button class="btn btn-success m-2" (click)="openConfirmationModal()">
+              <h5 class="mb-0">Confirm</h5>
+            </button>
+            <button class="btn btn-primary m-2" (click)="toggleHistory()">
+              <h5 class="mb-0">Toggle order history</h5>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Orders listing and item chose -->
+    <div class="col-6">
+      <div class="container card container-fluid shadow px-0 receipt-card mb-5" *ngIf="(itemChose$|async); let item">
+        <div class="card-header">
+          <div class="row">
+            <span class="col text-center">
+              <h4>Your current order : </h4>
+            </span>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="container py-4">
+            <div class="row my-2">
+              <span class="mx-auto">Name: {{item.name}}</span>
+            </div>
+            <div class="row my-2">
+              <span class="mx-auto">Price: {{item.price}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="row py-2">
+            <span class="mx-auto">Total : {{item.price}}$</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="container card container-fluid shadow px-0 history-card" *ngIf="historyDisplay">
+        <div class="card-header">
+          <span class="col text-center">
+            <h4 class="mb-0">Orders </h4>
+          </span>
+        </div>
+        <div class="card-body p-0" *ngIf="(ordersHistory$|async).length !== 0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">price</th>
+                <th scope="col">date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of (ordersHistory$|async)">
+                <th scope="row">{{item.id}}</th>
+                <td>{{item.item.price}}</td>
+                <td>{{item.createdAt| date}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+          <div class="row" *ngIf="(ordersHistory$|async).length == 0">
+            <span class="mx-auto">You don't have any orders</span>
+          </div>
+          <div class="row" *ngIf="(virtualValue$|async) !== 0 || (cashValue$|async) !== 0">
+            <div class="col text-center">
+              <span>
+                Cash value : {{(cashValue$|async)}}$
+              </span>
+            </div>
+            <div class="col text-center">
+              <span>
+                Virtual value : {{(virtualValue$|async)}}$
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

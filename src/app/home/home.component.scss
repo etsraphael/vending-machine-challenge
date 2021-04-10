@@ -1,0 +1,18 @@
+.one-item {
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.one-item:hover{
+    background: #8080805c;
+}
+
+.vending-machine-card, .receipt-card, .history-card {
+    border-radius: 15px;
+    border: 0;
+    overflow: hidden;
+}
+
+.selected {
+    background-color: #f46b6b;
+}

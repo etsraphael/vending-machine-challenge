@@ -1,0 +1,23 @@
+<!-- To display the card -->
+<div class="container" *ngIf="!loading">
+  <div class="row">
+    <span class="mx-auto">Payment methods</span>
+  </div>
+  <div class="row">
+    <div class="col-6 d-flex justify-content-center" (click)="processPayment('card')">
+      <button class="btn btn-success">By card</button>
+    </div>
+    <div class="col-6 d-flex justify-content-center" (click)="processPayment('cash')">
+      <button class="btn btn-success">By cash</button>
+    </div>
+  </div>
+</div>
+
+<!-- To display the card animation -->
+<div class="container" *ngIf="loading">
+  <div class="row my-4">
+    <div class="spinner-border text-light mx-auto" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
